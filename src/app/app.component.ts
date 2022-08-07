@@ -1,8 +1,4 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, ViewChild, TemplateRef } from '@angular/core';
-import { NxDialogService, NxModalRef } from '@aposin/ng-aquila/modal';
-import { ArticService } from './services/artic.service';
-
+import { Component } from '@angular/core';
 @Component({
   // tslint:disable-next-line
   selector: 'app-root',
@@ -10,10 +6,7 @@ import { ArticService } from './services/artic.service';
 })
 export class AppComponent {
   
-  constructor() {
-    
+  constructor() {    
   }
 
 }
-
-/**  Copyright APOSIN 2021 */

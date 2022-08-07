@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ArtWork } from '../models/response/artwork';
 import { ArticService } from '../services/artic.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 interface FilterOption {
   key: string;
   value: string;
