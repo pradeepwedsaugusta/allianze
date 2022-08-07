@@ -1,0 +1,17 @@
+.artImage{
+    width:100%;
+    height:25vh;
+}
+.artCard{
+    height:100%;
+    width:100%;
+}
+::ng-deep .nx-pagination__container{
+    justify-content: center;
+}
+
+::ng-deep .nx-spinner--large{
+    margin: auto;
+    margin-top: 5rem;
+    
+}

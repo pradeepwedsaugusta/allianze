@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiURL:"https://api.artic.edu/api/v1",
+  pageSize:10,
+  imageAppendURL:"/full/843,/0/default.jpg"
 };
 
 /*

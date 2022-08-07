@@ -1,0 +1,42 @@
+<div nxLayout="grid">
+  <div nxRow nxRowJustify="center">
+    <div nxCol="4">
+      <nx-formfield nxLabel="Filter:">
+        <nx-multi-select [options]="filterOptions" selectLabel="key" selectValue="value"></nx-multi-select>
+        <!-- <nx-dropdown [nxValueFormatter]="toFilterText" (selectionChange)="filterData($event)">
+          <nx-dropdown-item *ngFor="let option of filterOptions" [nxValue]="option"></nx-dropdown-item>
+        </nx-dropdown> -->
+      </nx-formfield>
+    </div>
+    <div nxCol="4">
+      <nx-formfield nxLabel="Sort By:">
+        <nx-dropdown [nxValueFormatter]="toText">
+          <nx-dropdown-item *ngFor="let option of sortOptions" [nxValue]="option"></nx-dropdown-item>
+        </nx-dropdown>
+      </nx-formfield>
+    </div>
+  </div>
+  <div nxRow *ngIf="!showSpinner">
+    <div nxCol="3" *ngFor="let artWork of artWorkList" class="nx-margin-y-s">
+      <nx-card class="artCard">
+        <nx-card-header>
+          <img class="artImage"
+            [src]="artWork.image_id!=null?iiif_url+'/'+artWork.image_id+imageAppendURL:'https://upload.wikimedia.org/wikipedia/commons/3/32/Art_Institute_of_Chicago_logo.svg'"
+            alt="product image" />
+          <h4 nxHeadline="subsection-xsmall">{{artWork.title}}</h4>
+        </nx-card-header>
+        <p nxCopytext="normal">{{artWork.artist_display}}</p>
+        <p nxCopytext="normal">{{artWork.place_of_origin}} </p>
+        <p nxCopytext="normal">{{artWork.material_titles}} </p>
+      </nx-card>
+    </div>
+  </div>
+  <div nxRow nxRowJustify="center" class="nx-margin-y-s">
+    <div nxCol="8">
+      <nx-pagination [nxCount]="pagination.count" [nxPage]="pagination.page" [nxPerPage]="pagination.perPage"
+        nxType="advanced" (nxGoPrev)="prevPage()" (nxGoNext)="nextPage()" (nxGoPage)="goToPage($event)">
+      </nx-pagination>
+      <nx-spinner nxSize="large" *ngIf="showSpinner"></nx-spinner>
+    </div>
+  </div>
+</div>
