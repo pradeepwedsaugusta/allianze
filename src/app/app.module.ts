@@ -15,10 +15,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { ArtcListComponent } from './artc-list/artc-list.component';
 import { NxPaginationModule } from '@aposin/ng-aquila/pagination';
 import { NxSpinnerModule } from '@aposin/ng-aquila/spinner';
+import { FilterPipe } from './pipes/filter.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 @NgModule({
   declarations: [
     AppComponent,
-    ArtcListComponent
+    ArtcListComponent,
+    FilterPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,

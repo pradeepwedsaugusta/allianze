@@ -9,15 +9,9 @@ import { ArticService } from './services/artic.service';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  formGroup: FormGroup;
-
+  
   constructor() {
-    this.formGroup = new FormBuilder().group({
-      name: ['', Validators.required],
-      items: ['', Validators.required],
-      email: ['', [Validators.email, Validators.required]],
-      consent: [false, Validators.requiredTrue]
-    });
+    
   }
 
 }

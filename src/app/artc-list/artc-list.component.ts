@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ArtWork } from '../models/response/artwork';
 import { ArticService } from '../services/artic.service';
-
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 interface FilterOption {
   key: string;
   value: string;
@@ -19,10 +19,19 @@ export class ArtcListComponent implements OnInit {
   iiif_url: string = "";
   imageAppendURL: string = environment.imageAppendURL;
   filterOptions: FilterOption[] = [];
-  sortOptions: string[] = [
-    'Name',
-    'Artist',
-    'Date'
+  sortOptions: FilterOption[] = [
+    {
+      key: 'Name',
+      value: 'title'
+    },
+    {
+      key: 'Artist',
+      value: 'artist_display'
+    },
+    {
+      key: 'Date',
+      value: 'date_start'
+    }
   ];
   pagination = {
     page: 1,
@@ -30,26 +39,30 @@ export class ArtcListComponent implements OnInit {
     perPage: environment.pageSize
   }
   showSpinner: boolean = false;
-  tempList: ArtWork[] = [];
-  constructor(private artcService: ArticService) { }
+  sortText: string = "";
+  filterText: string = "";
+
+  constructor(private artcService: ArticService) {
+  }
 
   ngOnInit() {
     this.getArtWorks();
   }
   getArtWorks() {
     this.showSpinner = true;
+    this.filterOptions = [];
+    this.filterText = "";
     this.artcService.getArtCollections(this.pagination.page).subscribe(res => {
       if (res) {
         if (res.data.length > 0) {
           this.artWorkList = res.data;
-          this.tempList = res.data;
           this.artWorkList.forEach(f => {
             if (!this.filterOptions.find(fi => fi.value == f.style_title) && f.style_title != null)
               this.filterOptions.push({
                 key: f.style_title + " (" + this.artWorkList.filter(fi => fi.style_title == f.style_title).length + ")",
                 value: f.style_title
               })
-          })
+          });
         }
         if (res.config) {
           this.iiif_url = res.config.iiif_url;
@@ -62,10 +75,6 @@ export class ArtcListComponent implements OnInit {
       this.showSpinner = false;
     });
   }
-  toText(value: string): string | null {
-    return value ? value : null;
-  }
-
   toFilterText(value: any) {
     return value.key ? value.key : value;
   }
@@ -81,8 +90,5 @@ export class ArtcListComponent implements OnInit {
   goToPage(n: any) {
     this.pagination.page = n;
     this.getArtWorks();
-  }
-  filterData(event: any) {
-    this.artWorkList = this.tempList.filter(f => f.style_title == event.value.value);
   }
 }

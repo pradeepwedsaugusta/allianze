@@ -1,23 +1,22 @@
 <div nxLayout="grid">
   <div nxRow nxRowJustify="center">
-    <div nxCol="4">
+    <div nxCol="12,12,6,4,4,4,4">
       <nx-formfield nxLabel="Filter:">
-        <nx-multi-select [options]="filterOptions" selectLabel="key" selectValue="value"></nx-multi-select>
-        <!-- <nx-dropdown [nxValueFormatter]="toFilterText" (selectionChange)="filterData($event)">
-          <nx-dropdown-item *ngFor="let option of filterOptions" [nxValue]="option"></nx-dropdown-item>
-        </nx-dropdown> -->
+        <nx-multi-select [(ngModel)]="filterText" [options]="filterOptions" selectLabel="key" selectValue="value">
+        </nx-multi-select>
       </nx-formfield>
     </div>
-    <div nxCol="4">
+    <div nxCol="12,12,6,4,4,4,4">
       <nx-formfield nxLabel="Sort By:">
-        <nx-dropdown [nxValueFormatter]="toText">
-          <nx-dropdown-item *ngFor="let option of sortOptions" [nxValue]="option"></nx-dropdown-item>
+        <nx-dropdown [nxValueFormatter]="toFilterText" [(ngModel)]="sortText">
+          <nx-dropdown-item *ngFor="let option of sortOptions" [nxValue]="option.value">{{option.key}}
+          </nx-dropdown-item>
         </nx-dropdown>
       </nx-formfield>
     </div>
   </div>
   <div nxRow *ngIf="!showSpinner">
-    <div nxCol="3" *ngFor="let artWork of artWorkList" class="nx-margin-y-s">
+    <div nxCol="12,12,6,3,3,3,3" *ngFor="let artWork of artWorkList | filter:filterText | sort:sortText" class="nx-margin-y-s">
       <nx-card class="artCard">
         <nx-card-header>
           <img class="artImage"
@@ -26,8 +25,13 @@
           <h4 nxHeadline="subsection-xsmall">{{artWork.title}}</h4>
         </nx-card-header>
         <p nxCopytext="normal">{{artWork.artist_display}}</p>
-        <p nxCopytext="normal">{{artWork.place_of_origin}} </p>
-        <p nxCopytext="normal">{{artWork.material_titles}} </p>
+        <p nxCopytext="normal" class="sub-text">{{artWork.place_of_origin}}
+          <span *ngIf="artWork.date_start !=null && artWork.date_end!=null">
+            <span *ngIf="artWork.date_start!=artWork.date_end">({{artWork.date_start}} - {{artWork.date_end}}) </span>
+            <span *ngIf="artWork.date_start==artWork.date_end">({{artWork.date_start}}) </span>
+          </span>
+        </p>
+        <p nxCopytext="normal" class="sub-text">{{artWork.material_titles}} </p>
       </nx-card>
     </div>
   </div>
